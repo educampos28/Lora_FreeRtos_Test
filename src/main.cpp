@@ -449,8 +449,7 @@ static void prvLora915M2_Task_Tx( void *pvParameters){
 		//Setting xTicksToWait to portMAX_DELAY will cause the task to wait indefinitely
 		xQueueReceive( xQueue_Lora915, &xMessage, portMAX_DELAY );
 
-		//BUG - avoiding that all modules try to send a message
-		//at the same time
+		//Manage the access to the lora module
 		xSemaphoreTake(xRADIO_TX_Semaphore, portMAX_DELAY);
 
 		//SPI is a shared resource.
